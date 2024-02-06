@@ -53,6 +53,7 @@ const Register = ({ setUser }) => {
       toast.success('Registration successful!');
       setUser(formData.username);
       setFormSubmit(true);
+      window.localStorage.setItem("name" , formData.username)
       Navigate("/")
 
     } else {
@@ -62,18 +63,24 @@ const Register = ({ setUser }) => {
 
   return (
     <div id="register-container">
-        <img id='logo' src="https://s3.ap-south-1.amazonaws.com/kalvi-education.github.io/front-end-web-development/Kalvium-Logo.png" alt="" />
-      <div className="form-parent">
-        <form onSubmit={handleSubmit}>
-          <h1 id="register-heading">Sign Up</h1>
-          <input type="text" name="username" placeholder="Enter User name..." onChange={handleInput} />
-          <input type="email" name="email" placeholder="Enter Email....." onChange={handleInput} />
-          <input type="password" name="password" placeholder="Enter Password....." onChange={handleInput} />
-          <input type="password" name="rePassword" placeholder="ReEnter Password....." onChange={handleInput} /> <br />
-          <input id="register-button" type="submit" value="Register" />
-        </form>
-      </div>
+    <ToastContainer />
+    <img id="logo" src="https://s3.ap-south-1.amazonaws.com/kalvi-education.github.io/front-end-web-development/Kalvium-Logo.png" alt="Logo" />
+    <div className="form-parent">
+      <form onSubmit={handleSubmit}>
+        <h1 id="register-heading">Sign Up</h1>
+        <div>{formSubmit && <p>Registration Successful!</p>}</div>
+        <input type="text" name="username" placeholder="Enter User name..." onChange={handleInput} />
+        {formError.username && <p className="red-col">{formError.username}</p>}
+        <input type="email" name="email" placeholder="Enter Email....." onChange={handleInput} />
+        {formError.email && <p className="red-col">{formError.email}</p>}
+        <input type="password" name="password" placeholder="Enter Password....." onChange={handleInput} />
+        {formError.password && <p className="red-col">{formError.password}</p>}
+        <input type="password" name="rePassword" placeholder="ReEnter Password....." onChange={handleInput} /> <br />
+        {formError.rePassword && <p className="red-col iup">{formError.rePassword}</p>}
+        <input id="register-button" type="submit" value="Register" />
+      </form>
     </div>
+  </div>
   );
 };
 
